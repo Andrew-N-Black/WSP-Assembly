@@ -73,4 +73,11 @@ write.table(t(c("query_contig", "subject_scaffold", "query_seq", "subject_scaffo
   
 #Now plot each pairwise nuDNA panel. 
 dna.dist <- read.csv("~/tularosa_variegatus_dis_30kb.csv")           
-ggplot(data=dna.dist,aes(x=query,y=K81,group=1))+geom_line(linetype="dashed",color="grey")+geom_point(size=1,aes(colour=factor(grp))) + scale_color_manual(values=c("red", "red", "black"))+theme(legend.position = "none",panel.grid = element_blank(),axis.title = element_blank(),axis.text.x = element_blank(),panel.background = element_blank())+ geom_hline(yintercept = 0.02221, linetype="dashed",colour="red")  
+ggplot(data=dna.dist,aes(x=query,y=K81,group=1))+geom_line(linetype="dashed",color="grey")+geom_point(size=1,aes(colour=factor(grp))) + scale_color_manual(values=c("red", "red", "black"))+theme(legend.position = "none",panel.grid = element_blank(),axis.title = element_blank(),axis.text.x = element_blank(),panel.background = element_blank())+ geom_hline(yintercept = 0.02221, linetype="dashed",colour="red")
+
+#Now plot
+a<-ggplot(x) +geom_point(aes(dist,ho,color=pop,group=pop,size=8,shape=pop))+theme_bw() +ylab("Observed Heterozygosity") +theme(axis.text=element_text(size=14,angle = 60,hjust = 1),axis.title=element_text(size=14))+xlab("")+theme(axis.text.y = element_text(size=12))+scale_color_manual(values=c("black","black"))+xlab("Distance (Kb) to nearest gene")+scale_shape_manual(values=c(20, 2))+xlim(0,50) +ylim(0,1)+ geom_abline(intercept = 0.41, slope = -0.0077, color="grey",linetype="dashed", size=1.5) 
+#OR as a boxplot after assigning factors for pairwise comp:
+nu_k2p$sp1_sp2 <- factor(nu_k2p$sp1_sp2,levels = c("C.tul-C.var", "C.nev-C.var", "C.nev-C.tul", "X.mac-C.nev", "X.mac-C.tul", "X.mac-C.var")) 
+gplot(data=nu_k2p,aes(x=sp1_sp2,y=K81,group=sp1_sp2))+geom_boxplot() +theme_classic()
+
